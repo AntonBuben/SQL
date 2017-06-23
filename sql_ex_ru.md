@@ -103,3 +103,94 @@ FROM Laptop, Product
 WHERE Product.model = Laptop.model AND Laptop.speed < (SELECT MIN(PC.speed) 
  FROM PC
  )
+
+18---------------
+SELECT p.maker, pr.price
+FROM Printer pr
+JOIN Product p ON pr.model=p.model
+WHERE pr.price = (SELECT MIN(price) FROM Printer WHERE color = 'y')
+
+SELECT Product.maker, MIN(Printer.price)
+FROM Product
+JOIN Printer ON Product.model = Printer.model
+WHERE Product.type = 'Printer'
+  AND Printer.color = 'y'
+GROUP BY Product.maker
+
+
+19
+SELECT Product.maker, AVG(Laptop.screen)
+FROM Product
+JOIN Laptop ON Product.model =Laptop.model
+WHERE Product.type = 'laptop'
+GROUP BY Product.maker
+
+20--------------
+SELECT maker, COUNT(model) count
+FROM Product
+GROUP BY maker HAVING COUNT(model)>=3
+
+21
+SELECT Product.maker, MAX(PC.price) Price
+FROM Product
+JOIN PC ON Product.model = PC.model
+GROUP BY Product.maker
+
+22
+SELECT Speed, AVG(Price) Price
+FROM PC
+GROUP BY Speed HAVING Speed >60
+
+31
+SELECT Class, Country
+FROM CLasses
+WHERE bore >= 16
+
+33
+SELECT ship
+FROM Outcomes
+WHERE battle= 'North Atlantic' AND result = 'sunk'
+
+38
+SELECT Country
+FROM Classes
+WHERE type='bb'
+INTERSECT
+SELECT Country
+FROM Classes
+WHERE type='bc'
+
+40
+SELECT Classes.class, Ships.name, Classes.country
+FROM Classes
+JOIN Ships ON Classes.class = Ships.class
+WHERE Classes.numGuns >=10
+
+42
+SELECT ship, battle
+FROM Outcomes
+WHERE result = 'sunk'
+
+44
+SELECT name
+FROM Ships
+WHERE name LIKE 'R%'
+UNION
+SELECT ship
+FROM Outcomes
+WHERE ship LIKE 'R%'
+
+45
+SELECT name
+FROM Ships
+WHERE name LIKE '% % %'
+UNION
+SELECT ship
+FROM Outcomes
+WHERE ship LIKE '% % %'
+
+49
+SELECT Ships.name
+FROM Ships
+JOIN Classes ON Ships.class = Classes.class
+WHERE bore >=16
